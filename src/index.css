@@ -6,6 +6,10 @@
   body {
     @apply bg-black overflow-x-hidden;
   }
+  
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 @layer utilities {
@@ -148,5 +152,17 @@
       0 0 10px currentColor,
       0 0 20px currentColor,
       inset 0 0 5px currentColor;
+  }
+}
+
+/* Mobile optimizations for Telegram browser */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .glitch-text::before,
+  .glitch-text::after {
+    display: none;
   }
 }
