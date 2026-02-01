@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
-import { Heart, Star, Zap, Music, Camera, Sun, Moon, ChevronLeft, ChevronRight, Instagram, Youtube, Twitter, Mail } from 'lucide-react'
+import { Heart, Star, Zap, Music, Camera, Sun, ChevronLeft, ChevronRight, Instagram } from 'lucide-react'
 
 function App() {
+  const [loading, setLoading] = useState(true)
   const [currentSlide, setCurrentSlide] = useState(0)
   const heroRef = useRef(null)
   const manifestoRef = useRef(null)
@@ -12,6 +13,13 @@ function App() {
   const isManifestoInView = useInView(manifestoRef, { once: true })
   const isMusicInView = useInView(musicRef, { once: true })
   const isLifestyleInView = useInView(lifestyleRef, { once: true })
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 3000)
+    return () => clearTimeout(timer)
+  }, [])
 
   const artists = [
     { name: 'FreshFact', aka: 'Ромчик', image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80', color: 'from-pink-500 to-purple-600' },
@@ -30,18 +38,32 @@ function App() {
       icon: Music
     },
     {
-      title: 'Баня-Life',
-      image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',
+      title: 'На спецоперации в Омане',
+      image: 'https://oejgkvftpbinliuopipr.supabase.co/storage/v1/object/public/assets/user_347995964/edit-photo-1769985702.jpg?',
+      overlay: 'from-pink-400/80 to-fuchsia-500/80',
+      text: 'Мой люкс-эскейп',
+      icon: Camera
+    },
+    {
+      title: 'Магшот',
+      image: 'https://oejgkvftpbinliuopipr.supabase.co/storage/v1/object/public/assets/user_347995964/edit-photo-1769985714.jpg?',
+      overlay: 'from-pink-500/80 to-rose-400/80',
+      text: 'Стиль и дерзость',
+      icon: Star
+    },
+    {
+      title: 'Настраиваю живот на правильную работу',
+      image: 'https://oejgkvftpbinliuopipr.supabase.co/storage/v1/object/public/assets/user_347995964/edit-photo-1769985726.jpg?',
       overlay: 'from-pink-500/80 to-rose-400/80',
       text: 'Не вылезаю из парилки',
       icon: Sun
     },
     {
-      title: 'Оман',
-      image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
-      overlay: 'from-pink-400/80 to-fuchsia-500/80',
-      text: 'Мой люкс-эскейп',
-      icon: Camera
+      title: 'Никак сопли не пройдут',
+      image: 'https://oejgkvftpbinliuopipr.supabase.co/storage/v1/object/public/assets/user_347995964/edit-photo-1769985734.jpg?',
+      overlay: 'from-fuchsia-500/80 to-pink-600/80',
+      text: 'Баня-Life',
+      icon: Heart
     }
   ]
 
@@ -54,9 +76,47 @@ function App() {
   }
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000)
-    return () => clearInterval(interval)
-  }, [])
+    if (!loading) {
+      const interval = setInterval(nextSlide, 5000)
+      return () => clearInterval(interval)
+    }
+  }, [loading])
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+        <div className="text-center">
+          <div className="mb-8">
+            <img 
+              src="https://oejgkvftpbinliuopipr.supabase.co/storage/v1/object/public/assets/user_347995964/edit-animation-1769985757.MOV?" 
+              alt="Loading" 
+              className="w-64 h-64 md:w-96 md:h-96 mx-auto rounded-full object-cover border-4 border-pink-500 neon-border"
+            />
+          </div>
+          <h2 className="font-gothic text-4xl md:text-6xl text-pink-400 text-shadow-neon mb-4">
+            Разминаю шею
+          </h2>
+          <div className="flex justify-center gap-2">
+            <motion.div
+              className="w-3 h-3 bg-pink-500 rounded-full"
+              animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+              transition={{ duration: 1, repeat: Infinity, delay: 0 }}
+            />
+            <motion.div
+              className="w-3 h-3 bg-fuchsia-500 rounded-full"
+              animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+              transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
+            />
+            <motion.div
+              className="w-3 h-3 bg-pink-400 rounded-full"
+              animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+              transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
@@ -120,7 +180,7 @@ function App() {
               <div className="absolute inset-0 bg-gradient-to-br from-pink-400 to-fuchsia-600 rounded-full blur-2xl opacity-50 animate-pulse-slow"></div>
               <div className="relative w-full h-full rounded-full border-4 border-pink-300 neon-border overflow-hidden plastic-texture">
                 <img 
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80" 
+                  src="https://oejgkvftpbinliuopipr.supabase.co/storage/v1/object/public/assets/user_347995964/edit-photo-1769985748.jpg?" 
                   alt="Katya" 
                   className="w-full h-full object-cover mix-blend-luminosity hover:mix-blend-normal transition-all duration-500"
                 />
@@ -416,7 +476,9 @@ function App() {
             {/* Neon Graffiti Social Icons */}
             <div className="flex justify-center gap-8 flex-wrap">
               <motion.a
-                href="#"
+                href="https://www.instagram.com/whoatemypopcorn?igsh=MTJ4NjlpNmllZHh2eg=="
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
                 className="group relative"
@@ -435,31 +497,9 @@ function App() {
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500 to-pink-600 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
                 <div className="relative bg-gradient-to-br from-fuchsia-600 to-pink-700 p-6 rounded-2xl border-4 border-fuchsia-400 neon-border plastic-texture">
-                  <Youtube size={48} className="text-white" />
-                </div>
-              </motion.a>
-
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                whileTap={{ scale: 0.9 }}
-                className="group relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative bg-gradient-to-br from-pink-600 to-rose-700 p-6 rounded-2xl border-4 border-pink-400 neon-border plastic-texture">
-                  <Twitter size={48} className="text-white" />
-                </div>
-              </motion.a>
-
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.2, rotate: -5 }}
-                whileTap={{ scale: 0.9 }}
-                className="group relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500 to-pink-600 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative bg-gradient-to-br from-fuchsia-600 to-pink-700 p-6 rounded-2xl border-4 border-fuchsia-400 neon-border plastic-texture">
-                  <Mail size={48} className="text-white" />
+                  <svg className="w-12 h-12 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                  </svg>
                 </div>
               </motion.a>
             </div>
